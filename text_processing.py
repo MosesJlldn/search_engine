@@ -23,7 +23,7 @@ def lemmatize_text(text):
 
 	return filtered_words
 
-for html_text_file in os.listdir('webpage_text'):
+for html_text_file in os.listdir('scraper/webpage_text'):
 	with open('webpage_text/' + html_text_file, 'r') as myfile:
 		text=myfile.read().replace('\n', ' ')
 		text = re.sub(' +', ' ', text)
