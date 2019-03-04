@@ -32,15 +32,15 @@ dict_size = len(all_docs_dict)
 
 words_indicies = []
 
-for i in range(0, 100):
+for index, words in enumerate(words_in_docs):
 
 	word_indicies = []
 
-	for word in all_docs_dict:
+	for dict_word in all_docs_dict:
 
-		if (word in words_in_docs[i]):
+		if (dict_word in words):
 
-			word_indicies.append(i)
+			word_indicies.append(index)
 
 	words_indicies.append(word_indicies)
 
