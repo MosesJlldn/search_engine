@@ -10,7 +10,7 @@ def sorted_aphanumeric(data):
 
 all_docs_dict = []
 
-path = 'C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\lemmatization\\lemmatized_texts' #path to html_texts
+path = 'C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\lemmatization\\lemmatized_texts' #path to lemmatized_texts
 
 words_in_docs = []
 listdir = os.listdir(path)
@@ -28,20 +28,24 @@ for lemm_text in sorted_listdir:
 		not_in_all_dict = [word for word in words_in_doc if word not in all_docs_dict]
 		all_docs_dict.extend(not_in_all_dict)
 
-dict_size = len(all_docs_dict)
-
 words_indicies = []
+word_and_indicies = {}
 
-for index, words in enumerate(words_in_docs):
+for word in all_docs_dict:
 
 	word_indicies = []
 
-	for dict_word in all_docs_dict:
+	for index, doc_words in enumerate(words_in_docs):
 
-		if (dict_word in words):
+		if (word in doc_words):
 
 			word_indicies.append(index)
-
 	words_indicies.append(word_indicies)
 
-print(words_indicies)
+word_and_indicies = dict(zip(all_docs_dict, words_indicies))
+
+with open('inverted_index.csv', 'w', newline='') as f:
+	
+	w = csv.DictWriter(f, word_and_indicies.keys())
+	w.writeheader()
+	w.writerow(word_and_indicies)
