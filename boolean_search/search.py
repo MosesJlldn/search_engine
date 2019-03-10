@@ -11,10 +11,13 @@ def and_operation(request):
 
 	for index, item in enumerate(request):
 
+		print("check")
+		print(request)
+
 		res = []
 
 		if (item == [-2]):
-
+			print('entering')
 			left = index - 1
 			right = index + 1
 
@@ -23,15 +26,15 @@ def and_operation(request):
 				right += 1
 				res = [i for i in request[left] if i not in request[right]]
 			else:
-				print(request[left])
-				print(request[right])
+
 				request[left].extend(request[right])
-				print(request[left])
 
 			new_request = [i for rindex, i in enumerate(request) if rindex < index]
 			new_request.extend([i for rindex, i in enumerate(request) if rindex > right])
 			request = new_request
-
+			print(request)
+			print('end\n')
+			and_operation(request)
 			break
 
 	return request
@@ -43,7 +46,7 @@ with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\inverted_index\\i
 	words = data[0]
 	inverted_indicies = data[1]
 
-request = "вынести AND Всевозможный"
+request = "вынести AND Всевозможный AND минус"
 
 lemmatizer = Mystem() 
 lemmatized_request = lemmatizer.lemmatize(request)
@@ -59,8 +62,8 @@ for index, item in enumerate(lemmatized_request):
 
 		lemmatized_request[index] = ast.literal_eval(inverted_indicies[words.index(item)])
 
-and_operation(lemmatized_request)
-
 print(lemmatized_request)
+print('\n')
+res = and_operation(lemmatized_request)
 
-# ast.literal_eval(indicies[0])
+
