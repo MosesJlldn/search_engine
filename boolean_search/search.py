@@ -25,12 +25,11 @@ def and_operation(request):
 			else:
 				print(request[left])
 				print(request[right])
-				res = request[left].extend(request[right])
-				print(res)
+				request[left].extend(request[right])
+				print(request[left])
 
-			new_request = [i for index, i in enumerate(request) if index < left]
-			new_request.append(res)
-			new_request.extend([i for index, i in enumerate(request) if index > right])
+			new_request = [i for rindex, i in enumerate(request) if rindex < index]
+			new_request.extend([i for rindex, i in enumerate(request) if rindex > right])
 			request = new_request
 
 			break
