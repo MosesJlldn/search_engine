@@ -52,12 +52,13 @@ for index, item in enumerate(doc_sets):
 path = 'C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\scraper\\URLs_list.txt'
 main_page = 'http://mathprofi.ru/'
 
+with open(path) as f:
+
+    content = f.readlines()
+    content = [x.strip() for x in content]
+
 for i in sets_intersection:
 
-	with open(path) as f:
-
-	    content = f.readlines()
-	    content = [x.strip() for x in content]
-	    page = word_tokenize(content[i])[1]
-	    url = main_page + page
-	    webbrowser.open(url,new=2)
+    page = word_tokenize(content[i])[1]
+    url = main_page + page
+    webbrowser.open(url,new=2)
