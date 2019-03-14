@@ -30,7 +30,12 @@ doc_sets = []
 
 for index, item in enumerate(lemmatized_request):
 
-	doc_sets.append(ast.literal_eval(inverted_indicies[words.index(item)]))
+	try:
+
+		doc_sets.append(ast.literal_eval(inverted_indicies[words.index(item)]))
+	except ValueError:
+
+		pass
 
 sets_intersection = []
 
