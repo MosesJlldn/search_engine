@@ -1,43 +1,17 @@
-import ast, csv
+import ast, csv, os, re, webbrowser
+from nltk.tokenize import word_tokenize
 from pymystem3 import Mystem
 
-bool_op = ['NOT', 'AND', 'OR']
-bool_op_code = [-1, -2, -3]
+def intersection(lst1, lst2): 
 
-def and_operation(request):
+    lst3 = [value for value in lst1 if value in lst2] 
+    return lst3 
 
-	left = 0
-	right = 0
+def sorted_aphanumeric(data):
 
-	for index, item in enumerate(request):
-
-		print("check")
-		print(request)
-
-		res = []
-
-		if (item == [-2]):
-			print('entering')
-			left = index - 1
-			right = index + 1
-
-			if (request[right] == [-3]):
-
-				right += 1
-				res = [i for i in request[left] if i not in request[right]]
-			else:
-
-				request[left].extend(request[right])
-
-			new_request = [i for rindex, i in enumerate(request) if rindex < index]
-			new_request.extend([i for rindex, i in enumerate(request) if rindex > right])
-			request = new_request
-			print(request)
-			print('end\n')
-			and_operation(request)
-			break
-
-	return request
+    convert = lambda text: int(text) if text.isdigit() else text.lower()
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
+    return sorted(data, key=alphanum_key)
 
 with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\inverted_index\\inverted_index.csv', 'r', newline='') as f:
 
@@ -46,24 +20,39 @@ with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\inverted_index\\i
 	words = data[0]
 	inverted_indicies = data[1]
 
-request = "вынести AND Всевозможный AND минус"
+request = "вынести Всевозможный минус"
 
 lemmatizer = Mystem() 
 lemmatized_request = lemmatizer.lemmatize(request)
 lemmatized_request = [w for w in lemmatized_request if w not in [" ", "\n"]]
 
+doc_sets = []
+
 for index, item in enumerate(lemmatized_request):
 
-	if (item in bool_op): 
+	doc_sets.append(ast.literal_eval(inverted_indicies[words.index(item)]))
 
-		lemmatized_request[index] = [bool_op_code[bool_op.index(item)]]
+sets_intersection = []
 
-	if (item not in bool_op):
+for index, item in enumerate(doc_sets):
 
-		lemmatized_request[index] = ast.literal_eval(inverted_indicies[words.index(item)])
+	if (index == 0):
 
-print(lemmatized_request)
-print('\n')
-res = and_operation(lemmatized_request)
+		sets_intersection = item
+	else:
 
+		sets_intersection = intersection(sets_intersection, item)
 
+path = 'C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\scraper\\URLs_list.txt'
+main_page = 'http://mathprofi.ru/'
+
+for i in sets_intersection:
+
+	with open(path) as f:
+
+	    content = f.readlines()
+	    content = [x.strip() for x in content]
+	    page = word_tokenize(content[3])[1]
+	    print(main_page + page)
+	    url = main_page + page
+	    webbrowser.open(url,new=2)
