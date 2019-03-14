@@ -21,7 +21,7 @@ with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\inverted_index\\i
 	inverted_indicies = data[1]
 
 request = "вынести Всевозможный минус ыдлвоардлывор"
-request = sys.argv[1]	
+#request = sys.argv[1]	
 
 lemmatizer = Mystem() 
 lemmatized_request = lemmatizer.lemmatize(request)
@@ -58,6 +58,6 @@ for i in sets_intersection:
 
 	    content = f.readlines()
 	    content = [x.strip() for x in content]
-	    page = word_tokenize(content[3])[1]
+	    page = word_tokenize(content[i])[1]
 	    url = main_page + page
 	    webbrowser.open(url,new=2)
