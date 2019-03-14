@@ -4,41 +4,6 @@ from pymystem3 import Mystem
 bool_op = ['NOT', 'AND', 'OR']
 bool_op_code = [-1, -2, -3]
 
-def and_operation(request):
-
-	left = 0
-	right = 0
-
-	for index, item in enumerate(request):
-
-		print("check")
-		print(request)
-
-		res = []
-
-		if (item == [-2]):
-			print('entering')
-			left = index - 1
-			right = index + 1
-
-			if (request[right] == [-3]):
-
-				right += 1
-				res = [i for i in request[left] if i not in request[right]]
-			else:
-
-				request[left].extend(request[right])
-
-			new_request = [i for rindex, i in enumerate(request) if rindex < index]
-			new_request.extend([i for rindex, i in enumerate(request) if rindex > right])
-			request = new_request
-			print(request)
-			print('end\n')
-			and_operation(request)
-			break
-
-	return request
-
 with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\inverted_index\\inverted_index.csv', 'r', newline='') as f:
 
 	reader = csv.reader(f)
@@ -62,8 +27,41 @@ for index, item in enumerate(lemmatized_request):
 
 		lemmatized_request[index] = ast.literal_eval(inverted_indicies[words.index(item)])
 
+def and_operation():
+
+	left = 0
+	right = 0
+
+	for index, item in enumerate(lemmatized_request):
+
+		res = []
+
+		if (item == [-2]):
+			print('entering')
+			left = index - 1
+			right = index + 1
+
+			if (lemmatized_request[right] == [-3]):
+
+				right += 1
+				res = [i for i in lemmatized_request[left] if i not in lemmatized_request[right]]
+			else:
+
+				lemmatized_request[left].extend(lemmatized_request[right])
+
+			new_lemmatized_request = [i for rindex, i in enumerate(lemmatized_request) if rindex < index]
+			new_lemmatized_request.extend([i for rindex, i in enumerate(lemmatized_request) if rindex > right])
+			lemmatized_request = new_lemmatized_request
+			print(lemmatized_request)
+			print('end\n')
+			and_operation(lemmatized_request)
+			break
+
+	print("check")
+	print(lemmatized_request)
+	return lemmatized_request
+
 print(lemmatized_request)
 print('\n')
 res = and_operation(lemmatized_request)
-
 
