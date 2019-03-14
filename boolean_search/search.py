@@ -1,4 +1,4 @@
-import ast, csv, os, re, webbrowser
+import ast, csv, os, re, webbrowser, sys
 from nltk.tokenize import word_tokenize
 from pymystem3 import Mystem
 
@@ -20,7 +20,7 @@ with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\inverted_index\\i
 	words = data[0]
 	inverted_indicies = data[1]
 
-request = "вынести Всевозможный минус"
+request = "вынести Всевозможный минус ыдлвоардлывор"
 
 lemmatizer = Mystem() 
 lemmatized_request = lemmatizer.lemmatize(request)
