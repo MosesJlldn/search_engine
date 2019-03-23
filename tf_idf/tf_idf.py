@@ -52,7 +52,7 @@ for index, word in enumerate(all_docs_dict):
 				tf_for_one_word_in_current_doc += 1
 				is_word_occured_in_current_doc = True
 
-		tf_for_one_word.append(tf_for_one_word_in_current_doc)
+		tf_for_one_word.append(tf_for_one_word_in_current_doc / 100)
 
 		if (is_word_occured_in_current_doc):
 
