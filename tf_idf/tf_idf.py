@@ -61,18 +61,36 @@ for index, word in enumerate(all_docs_dict):
 	tfs_for_all_words.append(tf_for_one_word)
 	idfs_for_all_words.append(idf_for_one_word)
 
+#make idf real idf
+idfs_for_all_words = [log(total_number_of_doc / word) for word in idfs_for_all_words]
+
 for windex, word in enumerate(all_docs_dict):
 
 	TFIDF_for_one_word = []
 
 	for dindex, doc in enumerate(docs):
 
-		TFIDF_for_one_word_in_current_doc = tfs_for_all_words[windex][dindex] * log(total_number_of_doc / idfs_for_all_words[windex])
+		TFIDF_for_one_word_in_current_doc = tfs_for_all_words[windex][dindex] * idfs_for_all_words[windex]
 		TFIDF_for_one_word.append(TFIDF_for_one_word_in_current_doc)
 
 	TFIDF_for_all_words.append(TFIDF_for_one_word)
 
 result = dict(zip(all_docs_dict, TFIDF_for_all_words))
+
+idfs_result = dict(zip(all_docs_dict, idfs_for_all_words))
+tfs_result = dict(zip(all_docs_dict, tfs_for_all_words))
+
+with open('idfs.csv', 'w', newline='') as f:
+
+	w = csv.DictWriter(f, idfs_result.keys())
+	w.writeheader()
+	w.writerow(idfs_result)
+
+with open('tfs.csv', 'w', newline='') as f:
+
+	w = csv.DictWriter(f, tfs_result.keys())
+	w.writeheader()
+	w.writerow(tfs_result)
 
 with open('td_idf.csv', 'w', newline='') as f:
 	
