@@ -61,6 +61,7 @@ for index, word in enumerate(words):
 
 	if (query_vector[index] != 0):
 
+		query_vector[index] /= len(lemmatized_request)
 		query_vector[index] *= idfs[index]
 
 for word in lemmatized_request:
