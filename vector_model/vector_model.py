@@ -15,8 +15,16 @@ with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\idfs.csv'
 	words = data[0]
 	idfs = data[1]
 
+with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\tfs.csv', 'r', newline='') as f:
+
+	reader = csv.reader(f)
+	data = [row for row in reader]
+	words = data[0]
+	idfs = data[1]
+
 tf_idfs = [ast.literal_eval(list) for list in tf_idfs]
 idfs = [ast.literal_eval(list) for list in idfs]
+tfs = [ast.literal_eval(list) for list in tfs]
 
 request = "вынести Всевозможный минус ыдлвоардлывор"
 lemmatizer = Mystem() 
@@ -40,3 +48,10 @@ for doc_index in range(0, doc_count):
 
 	docs_vectors_length.append(current_doc_length)
 
+query_vector_length = 0
+
+for word in lemmatized_request:
+
+	query_vector_length += idfs[words.index(word)] * idfs[words.index(word)]  # to the second degree
+
+query_vector_length = math.sqrt(query_vector_length)
