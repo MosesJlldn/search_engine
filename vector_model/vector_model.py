@@ -74,5 +74,5 @@ for word in lemmatized_request:
 query_vector_length = math.sqrt(query_vector_length)
 
 #query vector calculated
-
+# A = query_vector, B = docs_vectors[i], ||A|| = query_vector_length, ||B|| = docs_vectors_length[i]
 print(query_vector)
