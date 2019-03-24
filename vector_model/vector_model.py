@@ -1,5 +1,6 @@
-import ast, math, csv
+import ast, math, csv, numpy, operator
 from pymystem3 import Mystem
+from nltk.tokenize import word_tokenize
 
 with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\td_idf.csv', 'r', newline='') as f:
 
@@ -18,7 +19,7 @@ with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\idfs.csv'
 tf_idfs = [ast.literal_eval(list) for list in tf_idfs]
 idfs = [ast.literal_eval(list) for list in idfs]
 
-request = "вынести Всевозможный минус ыдлвоардлывор"
+request = 'интеграл первого порядка' #"вынести Всевозможный минус ыдлвоардлывор"
 lemmatizer = Mystem() 
 lemmatized_request = lemmatizer.lemmatize(request)
 lemmatized_request = [w for w in lemmatized_request if w not in [" ", "\n"]]
@@ -76,4 +77,23 @@ query_vector_length = math.sqrt(query_vector_length)
 
 #query vector calculated
 # A = query_vector, B = docs_vectors[i], ||A|| = query_vector_length, ||B|| = docs_vectors_length[i]
-print(query_vector)
+
+query_vector = numpy.array(query_vector)
+docs_vectors = numpy.array(docs_vectors)
+
+vector_mult = docs_vectors.dot(query_vector)
+vector_length_mult = [dvl * query_vector_length for dvl in docs_vectors_length]
+
+similarity = vector_mult / vector_length_mult
+
+path = 'C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\scraper\\URLs_list.txt'
+main_page = 'http://mathprofi.ru/'
+
+with open(path) as f:
+
+    content = f.readlines()
+    content = [x.strip() for x in content]
+
+result = dict(zip(content, similarity))
+
+print(sorted(result.items(), key=operator.itemgetter(1), reverse=True))
