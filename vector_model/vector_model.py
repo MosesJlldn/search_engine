@@ -16,8 +16,8 @@ with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\idfs.csv'
 	words = data[0]
 	idfs = data[1]
 
-tf_idfs = [ast.literal_eval(list) for list in tf_idfs]
-idfs = [ast.literal_eval(list) for list in idfs]
+tf_idfs = [ast.literal_eval(lst) for lst in tf_idfs]
+idfs = [ast.literal_eval(lst) for lst in idfs] 
 
 request = 'интеграл первого порядка' #"вынести Всевозможный минус ыдлвоардлывор"
 lemmatizer = Mystem() 
