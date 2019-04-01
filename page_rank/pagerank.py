@@ -1,3 +1,6 @@
+import ast, csv
+from pymystem3 import Mystem
+
 def sorted_aphanumeric(data):
 
     convert = lambda text: int(text) if text.isdigit() else text.lower()
@@ -52,10 +55,21 @@ def score(idf, tf, d, avgdl, k=2.0, b=0.75):
 
 	return res
 
+def preprocess_query(query):
+
+	lemmatizer = Mystem() 
+	lemmatized_query = lemmatizer.lemmatize(query)
+	lemmatized_query = [w for w in lemmatized_query if w not in [" ", "\n"]]
+
+	return lemmatized_query
+
 if __name__ == "__main__":
 
 	docs_length = read_doc_length()
 	avgdl = sum(docs_length) / len(docs_length)
+
+	query = "как считать интегралы"
+	preprocessed_query = preprocess_query(query)
 
 	docs_score = []
 
