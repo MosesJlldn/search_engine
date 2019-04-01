@@ -1,5 +1,6 @@
-import ast, csv, os, re
+import ast, csv, os, re, operator
 from pymystem3 import Mystem
+from operator import add
 
 def sorted_aphanumeric(data):
 
@@ -89,8 +90,23 @@ if __name__ == "__main__":
 			docs_score.append(docs_score_for_query_word)
 		except ValueError:
 
-			docs_score.append(0)
+			for i in range (0, 99):
+				docs_score_for_query_word.append(0)
+			
+			docs_score.append(docs_score_for_query_word)
 
-	for i in range(0, 3):
+	result_score = docs_score[0]
 
-		print(docs_score[i])
+	for i in range(1, 3):
+
+		result_score = list(map(add, result_score, docs_score[i]))
+
+	path = 'C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\scraper\\URLs_list.txt'
+	main_page = 'http://mathprofi.ru/'
+	with open(path) as f:
+
+	    content = f.readlines()
+	    content = [x.strip() for x in content]
+
+	result = dict(zip(content, result_score))
+	print(sorted(result.items(), key=operator.itemgetter(1), reverse=True))
