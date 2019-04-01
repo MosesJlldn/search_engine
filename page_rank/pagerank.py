@@ -54,3 +54,8 @@ def score(idf, tf, d, avgdl, k=2.0, b=0.75):
 
 if __name__ == "__main__":
 
+	docs_score = []
+
+	for i in range (0, 99):
+
+		docs_score.append(score())
