@@ -26,7 +26,7 @@ def read_data():
 
 	return [words, tfs, idfs]
 
-def doc_length():
+def read_doc_length():
 
 	path = 'C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\lemmatization\\lemmatized_texts\\'
 	listdir = os.listdir(path)
@@ -53,6 +53,9 @@ def score(idf, tf, d, avgdl, k=2.0, b=0.75):
 	return res
 
 if __name__ == "__main__":
+
+	docs_length = read_doc_length()
+	avgdl = sum(docs_length) / len(docs_length)
 
 	docs_score = []
 
