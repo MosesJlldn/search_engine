@@ -1,4 +1,4 @@
-import ast, csv
+import ast, csv, os, re
 from pymystem3 import Mystem
 
 def sorted_aphanumeric(data):
@@ -25,7 +25,7 @@ def read_data():
 
 		reader = csv.reader(f)
 		data = [row for row in reader]
-		idfs = data[1]
+		idfs = [float(d) for d in data[1]]
 
 	return [words, tfs, idfs]
 
@@ -44,7 +44,7 @@ def read_doc_length():
 			reader = csv.reader(f)
 			data = [row for row in reader]
 			words = data[0]
-			count = data[1]
+			count = [int(d) for d in data[1]]
 			docs_length.append(sum(count))
 
 	return docs_length
@@ -73,6 +73,24 @@ if __name__ == "__main__":
 
 	docs_score = []
 
-	for i in range (0, 99):
+	tf_and_idf = read_data()
 
-		docs_score.append(score())
+	for word in preprocessed_query:
+
+		docs_score_for_query_word = []
+
+		try:
+			index = tf_and_idf[0].index(word)
+
+			for i in range (0, 99):
+
+				docs_score_for_query_word.append(score(tf_and_idf[2][index], tf_and_idf[1][index][i], docs_length[i], avgdl))
+
+			docs_score.append(docs_score_for_query_word)
+		except ValueError:
+
+			docs_score.append(0)
+
+	for i in range(0, 3):
+
+		print(docs_score[i])
