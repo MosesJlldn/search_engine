@@ -55,4 +55,5 @@ for i in sets_intersection:
 
     page = word_tokenize(content[i])[1]
     url = main_page + page
-    webbrowser.open(url,new=2)
+    #webbrowser.open(url,new=2)
+    print(url)
