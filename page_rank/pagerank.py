@@ -1,34 +1,43 @@
 import ast, csv, os, re, operator
 from pymystem3 import Mystem
 from operator import add
+import glob
 
 def sorted_aphanumeric(data):
 
     convert = lambda text: int(text) if text.isdigit() else text.lower()
-    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
     return sorted(data, key=alphanum_key)
 
 def read_data():
 
-	words = []
-	tfs = []
-	idfs = []
-
-	with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\tfs.csv', 'r', newline='') as f:
-
-		reader = csv.reader(f)
-		data = [row for row in reader]
-		words = data[0]
-		tfs = data[1]
-		tfs = [ast.literal_eval(lst) for lst in tfs]
-
-	with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\idfs.csv', 'r', newline='') as f:
-
-		reader = csv.reader(f)
-		data = [row for row in reader]
-		idfs = [float(d) for d in data[1]]
-
-	return [words, tfs, idfs]
+	# words = []
+	# tfs = []
+	# idfs = []
+    #
+	# with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\tfs.csv', 'r', newline='') as f:
+    #
+	# 	reader = csv.reader(f)
+	# 	data = [row for row in reader]
+	# 	words = data[0]
+	# 	tfs = data[1]
+	# 	tfs = [ast.literal_eval(lst) for lst in tfs]
+    #
+	# with open('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\tf_idf\\idfs.csv', 'r', newline='') as f:
+    #
+	# 	reader = csv.reader(f)
+	# 	data = [row for row in reader]
+	# 	idfs = [float(d) for d in data[1]]
+    #
+	# return [words, tfs, idfs]
+    links = {}
+    filePaths = [f for f in glob.glob('C:\\Users\\Moses\\Documents\\GitHub\\search_engine\\scraper\\links\\' + "**/*.txt", recursive=True)]
+    for fp in filePaths:
+        fileName = os.path.splitext(fp)[0]
+        with open(fp, "r") as f:
+            for line in f:
+                links[fileName] = line;
+    return links
 
 def read_doc_length():
 
@@ -58,7 +67,7 @@ def score(idf, tf, d, avgdl, k=2.0, b=0.75):
 
 def preprocess_query(query):
 
-	lemmatizer = Mystem() 
+	lemmatizer = Mystem()
 	lemmatized_query = lemmatizer.lemmatize(query)
 	lemmatized_query = [w for w in lemmatized_query if w not in [" ", "\n"]]
 
@@ -74,7 +83,10 @@ if __name__ == "__main__":
 
 	docs_score = []
 
-	tf_and_idf = read_data()
+	# tf_and_idf = read_data()
+    links = read_data()
+
+    # <-- Остановился здесь
 
 	for word in preprocessed_query:
 
@@ -92,7 +104,7 @@ if __name__ == "__main__":
 
 			for i in range (0, 99):
 				docs_score_for_query_word.append(0)
-			
+
 			docs_score.append(docs_score_for_query_word)
 
 	result_score = docs_score[0]
