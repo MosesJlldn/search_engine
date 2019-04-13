@@ -28,7 +28,7 @@ class MathprofiSpider(scrapy.Spider):
 
 			self.fisrt_run = False
 
-		texts = []
+		texts = ['URLs_list.txt']
 
 		TEXT_SELECTOR = './/td[2]/p/text()'
 		for text in response.xpath(TEXT_SELECTOR):
