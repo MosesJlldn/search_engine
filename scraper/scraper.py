@@ -1,11 +1,14 @@
 import scrapy
+import os
 
 class MathprofiSpider(scrapy.Spider):
 	name = "mathprofi_spider"
 	start_urls = ['http://mathprofi.ru/']
 
-	urls = []
-	urls.append('mathprofi.ru')
+	# urls = []
+	links = {}
+	# urls.append('mathprofi.ru')
+	urls.append(start_urls[0])
 	urls_counter = 0
 	fisrt_run = True
 
@@ -15,17 +18,23 @@ class MathprofiSpider(scrapy.Spider):
 			SET_SELECTOR = '.classs'
 			for page in response.css(SET_SELECTOR):
 				NAME_SELECTOR = 'a ::attr(href)'
-				self.urls.extend(page.css(NAME_SELECTOR).getall())
+				links[response.request.url] = page.css(NAME_SELECTOR).getall()
+				# self.urls.extend(page.css(NAME_SELECTOR).getall())
 				yield {
 	                'name': page.css(NAME_SELECTOR).getall(),
 	            }
-
-			limited_list = self.urls[:100]
-			with open('URLs_list.txt', 'w') as f:
-				for item in limited_list:
-					f.write("№%i " % limited_list.index(item))
-					f.write("%s\n" % item)
-
+			try:
+				os.mkdir('links')
+			except FileExistsError:
+    			print("Directory " , dirName ,  " already exists")
+			# limited_list = self.urls[:100]
+			limited_list = self.links[:100]
+			# with open('URLs_list.txt', 'w') as f:
+			for item in limited_list.items():
+				# f.write("№%i " % limited_list.index(item))
+				with open('links/' + item + '.txt', 'w+') as f:
+					for value in item.values():
+						f.write((start_urls[0] + "%s\n" % value))
 			self.fisrt_run = False
 
 		texts = ['URLs_list.txt']
