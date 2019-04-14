@@ -20,7 +20,7 @@ class MathprofiSpider(scrapy.Spider):
 
 			LINK_SELECTOR = 'a[href$=".html"] ::attr(href)'
 			links.extend(item.css(LINK_SELECTOR).getall())
-		links.append('')
+		# links.append('')
 		with open('links_map.csv', 'a', newline='') as f:
 			writer = csv.writer(f)
 			writer.writerow(links)
