@@ -43,10 +43,15 @@ if __name__=="__main__":
 		page_rank_map = dict(zip(links, page_rank))
 
 	sorted_result = sorted(page_rank_map.items(), key=operator.itemgetter(1), reverse=True)
+	k = [res[0] for res in sorted_result]
+	v = [res[1] for res in sorted_result]
+	sorted_result = zip(k, v)
 
 	with open('result.csv', 'w', newline='') as f:
 		writer = csv.writer(f)
-		writer.writerow(sorted_result)
+		for row in sorted_result:
+			writer.writerow(row)
 
-	print(sorted(page_rank_map.items(), key=operator.itemgetter(1), reverse=True))
-
+	for i in range(len(k)):
+		print(k[i], v[i])
+	
