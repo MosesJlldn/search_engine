@@ -23,4 +23,6 @@ if __name__=="__main__":
 	links = list(links_map.keys()) # all page links names
 	N = len(links_map)
 	page_rank = [1 / N for i in range(0, 100)]
+	page_rank_map = dict(zip(links, page_rank))
+	
 	print(calc_page_rank(links[1], links_map, N))
