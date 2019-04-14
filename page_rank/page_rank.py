@@ -34,7 +34,7 @@ if __name__=="__main__":
 	links_on_page_map = dict(zip(links, links_amount))
 
 	N = len(links_map)
-	page_rank = [1 / N for i in range(0, 100)]
+	page_rank = [1 / N for i in range(N)]
 	page_rank_map = dict(zip(links, page_rank))
 	
 	for i in range(0, 100):
