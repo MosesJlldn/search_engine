@@ -31,11 +31,11 @@ if __name__=="__main__":
 	links = list(links_map.keys()) # all page links names
 
 	links_amount = [len(value) for key, value in links_map.items()] # calc amount of links on every page (L)
-	links_on_page_map = dict(zip(links, links_amount)) # map - page: links amount
+	links_on_page_map = dict(zip(links, links_amount)) # map - page: links amount (L)
 
 	N = len(links_map) # amount of pages in collection
-	page_rank = [1 / N for i in range(N)] # default page rank
-	page_rank_map = dict(zip(links, page_rank)) # map - page: page rank
+	page_rank = [1 / N for i in range(N)] # default page rank (PR)
+	page_rank_map = dict(zip(links, page_rank)) # map - page: page rank (PR)
 
 	#calc page rank 100 times
 	for i in range(0, 100):
