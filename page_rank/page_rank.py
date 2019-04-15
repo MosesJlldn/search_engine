@@ -21,7 +21,7 @@ def calc_page_rank(page, links_map, page_rank_map, links_on_page_map, N, d=0.75)
 	connected_links = [key for key, value in links_map.items() if page in value] #links that refer to page
 
 	sum_list = [(page_rank_map[link] / links_on_page_map[link]) for link in connected_links]
-	res = ((1 - d) / N) + sum(sum_list)
+	res = ((1 - d) / N) + d * sum(sum_list)
 
 	return res
 
